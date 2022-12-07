@@ -7,24 +7,24 @@ const preguntas = [
   {
     type: "list",
     name: "opciones",
-    message: "Registra o borra tus tareas hechas en el dia \n",
+    message: "Registras tus Tareas \n",
     loop: true,
     choices: [
       {
         value: "1",
-        name: `${"1.".green}) Registrar tarea`,
+        name: `${"1.".green} Registrar tarea`,
       },
       {
         value: "2",
-        name: `${"2.".green}) Listar tareas `,
+        name: `${"2.".green} Listar tareas `,
       },
       {
         value: "3",
-        name: `${"3.".green}) Borrar tareas`,
+        name: `${"3.".green} Borrar tareas`,
       },
       {
         value: "0",
-        name: `${"0.".red}) SALIR`,
+        name: `${"0.".red} SALIR`,
       },
     ],
   },
@@ -43,7 +43,7 @@ const menu = async () => {
   return opciones;
 };
 
-const getNewTask = async () => {
+const obtenerNuevaTarea = async () => {
   const description = await inquerer.prompt({
     type: "input",
     name: "description",
@@ -55,11 +55,11 @@ const getNewTask = async () => {
       input = input.trim(); // quita los espacios solo para la validacion
 
       if (input == "") {
-        // Pass the return value in the done callback
+        // Pasar el valor de retorno en la llamada de retorno realizada
         done("You need to provide a description");
         return;
       }
-      // Pass the return value in the done callback
+      // Pasar el valor de retorno en la llamada de retorno realizada
       done(null, true);
     },
   });
@@ -74,7 +74,7 @@ const pausa = async (mensaje) => {
   return pause;
 };
 
-const menuBorrar = async (tareas = []) => {
+const eliminar = async (tareas = []) => {
   // menu de items a borrar
   // lista las tareas en el apartado de borrar
   const choices = tareas.map((tarea, i) => {
@@ -119,4 +119,4 @@ const confirmar = async (message) => {
   return ok;
 };
 
-module.exports = { menu, getNewTask, pausa, menuBorrar, confirmar };
+module.exports = { menu, obtenerNuevaTarea, pausa, eliminar, confirmar };

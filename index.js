@@ -2,9 +2,9 @@ require("colors");
 
 const {
   menu,
-  getNewTask,
+  obtenerNuevaTarea,
   pausa,
-  menuBorrar,
+  eliminar,
   confirmar,
 } = require("./helpers/menuInquire");
 const listTareas = require("./class/tarea");
@@ -18,7 +18,7 @@ const principal = async () => {
 
       switch (resmenu) {
         case "1": // agregar tarea
-          const { description } = await getNewTask();
+          const { description } = await obtenerNuevaTarea();
 
           lista.nuevaTarea(description);
           await pausa(`Se ha agregado ${"CORRECTAMENTE".green}`);
@@ -32,7 +32,7 @@ const principal = async () => {
           break;
         case "3": //borrar tareas
           const array = lista.traerDataFromDB();
-          const deleteID = await menuBorrar(array);
+          const deleteID = await eliminar(array);
           const ok = await confirmar(
             `'¿ Desea ${"borrar".red} la ${"tarea".green}? '`
           );
