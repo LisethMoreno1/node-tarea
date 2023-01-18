@@ -1,38 +1,64 @@
-// const http = require("http");
 const jsonData = require("../data.json");
 const host = "localhost";
-const port = 9000;
+const port = 8080;
 const fs = require("fs");
 const express = require("express");
 const app = express();
 
-app.get ("/", function (req, res) {
+app.get("/", function (req, res) {
   res.json(jsonData);
   res.end();
-})
+});
 
-app.post("/", express.json(), function (req, res) {
+// Agregar
+app.post("/agregar", express.json(), function (req, res) {
   const Data = req.body;
   console.log(Data);
-  jsonData.push(Data)
+  jsonData.push(Data);
   fs.writeFileSync("../data.json", JSON.stringify(jsonData), function (err) {
     if (err) throw err;
-    console.log("updated");
+    console.log("recibido");
   });
   res.send("recibido");
   res.end();
-})
-
-
-// const requestListener = function (req, res) {
-//   res.setHeader("Content-Type", "application/json");
-//   res.writeHead(200);
-//   res.end(JSON.stringify(jsonData));
-// };
-
-// const server = http.createServer(requestListener);
-app.listen(port, host, () => {
-  console.log(`Server is running on http://${host}:${port}`);
 });
 
-module.exports= app;
+// Eliminar
+app.delete("/eliminar", express.json(), function (req, res) {
+  const Data = req.body;
+  console.log(Data);
+  jsonData.pop(Data);
+  fs.writeFileSync("../data.json", JSON.stringify(jsonData), function (err) {
+    if (err) throw err;
+    console.log("eliminado");
+  });
+  res.send("eliminado");
+  res.end();
+});
+
+// editar
+
+app.put("/editar/:id", express.json(), function (req, res) {
+  const Data = req.body;
+  console.log(Data);
+  const { id } = req.params;
+  const jsonData = JSON.parse(fs.readFileSync("../data.json", "utf-8"));
+  jsonData.forEach((tarea) => {
+    if (tarea.id == id) {
+      tarea.descripcion = req.body.descripcion;
+      tarea.fecha = req.body.fecha;
+    }
+  });
+  fs.writeFileSync("../data.json", JSON.stringify(jsonData), function (err) {
+    if (err) throw err;
+    console.log("editado");
+  });
+  res.json({ message: `Tarea ${id}  ha sido actualizada` });
+  res.end();
+});
+
+app.listen(port, host, () => {
+  console.log(`El servidor está funcionando en http://${host}:${port}`);
+});
+
+module.exports = app;
