@@ -27,7 +27,7 @@ const principal = async () => {
         case "2": // ver tareas
           console.clear();
           lista.mostrarTareas();
-          await pausa(`Presione ${"Enter".green} para Continuar `);
+          await pausa(`Presione ${"Enter".green} para Continuar`);
 
           break;
         case "3": //borrar tareas
@@ -37,7 +37,7 @@ const principal = async () => {
             `'¿ Desea ${"borrar".red} la ${"tarea".green}? '`
           );
           ok ? lista.delteData(deleteID) : false;
-          await pausa(`Presione ${"Enter".green} para Continuar `);
+          await pausa(`Presione ${"Enter".green} para Continuar`);
 
           break;
       }
