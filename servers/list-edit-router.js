@@ -4,9 +4,25 @@ const port = 8080;
 const fs = require("fs");
 const express = require("express");
 const app = express();
+const {
+  error,
+  Validarse,
+  validacionPeticion,
+  validarParametros,
+  validarurl,
+} = require("../middleware/addresser");
+
+
+app.use(express.json());
+app.use(error);
+app.use(Validarse);
+app.use(validarurl);
+app.use(validacionPeticion);
+app.use(validarParametros);
+
 
 // Agregar
-app.post("/agregar", express.json(), function (req, res) {
+app.post("/agregar",  function (req, res) {
   const Data = req.body;
   console.log(Data);
   jsonData.push(Data);
@@ -19,7 +35,7 @@ app.post("/agregar", express.json(), function (req, res) {
 });
 
 // Eliminar
-app.delete("/eliminar", express.json(), function (req, res) {
+app.delete("/eliminar",  function (req, res) {
   const Data = req.body;
   console.log(Data);
   jsonData.pop(Data);
@@ -33,7 +49,7 @@ app.delete("/eliminar", express.json(), function (req, res) {
 
 // editar
 
-app.put("/editar/:id", express.json(), function (req, res) {
+app.put("/editar/:id",  function (req, res) {
   const Data = req.body;
   console.log(Data);
   const { id } = req.params;
@@ -48,7 +64,7 @@ app.put("/editar/:id", express.json(), function (req, res) {
     if (err) throw err;
     console.log("editado");
   });
-  res.json({ message: `Tarea ${id}  ha sido actualizada` });
+  res.json({ Mensaje: `Tarea ${id}  ha sido actualizada` });
   res.end();
 });
 

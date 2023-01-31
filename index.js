@@ -9,12 +9,15 @@ const {
 } = require("./helpers/menuInquire");
 const listTareas = require("./class/tarea");
 
+
+
 const principal = async () => {
   try {
     let resmenu;
     do {
       resmenu = await menu();
       const lista = new listTareas();
+      
 
       switch (resmenu) {
         case "1": // agregar tarea

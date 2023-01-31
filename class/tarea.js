@@ -4,12 +4,12 @@ const moment = require('moment');
 const { saveData, showData, deleteDataDB } = require('../helpers/DB');
 
 class tarea {
-    constructor(desc = ''){
-    this.id = uuidv4(),
-    this.descripcion = desc,
-    this.fecha = moment().format('dddd Do MMMM') 
-    }
-
+  constructor(desc = "", estado = "") {
+    (this.id = uuidv4()),
+      (this.descripcion = desc),
+      (this.fecha = moment().format("dddd Do MMMM")),
+      (this.estado = estado);
+  }
 }
 
 class tareas {
@@ -17,8 +17,8 @@ class tareas {
         this.listadoTareas = {};
     }
 
-nuevaTarea(desc){
-    const item = new tarea(desc);
+nuevaTarea(desc , estado) {
+    const item = new tarea(desc,estado);
 
     const {id,...all} = item; // nuevo de ES9 
 
@@ -31,13 +31,13 @@ mostrarTareas(){
      let cont = 1;
      let lastfecha = '';
      for (const property in dataObj) {
-         const {descripcion,fecha} = dataObj[property];
+         const {descripcion,fecha,estado} = dataObj[property];
 
         (lastfecha != fecha )
         ?console.log(`${'------------------------------------------------------'.magenta}`) 
         : false;
 
-        console.log(`${cont.toString().blue}${')'.blue}  ${descripcion} ${'_____REALIZADO'.green} el : ${fecha}`);
+        console.log(`${cont.toString().blue}${')'.blue}  ${descripcion},${estado} ${'_____REALIZADO'.green} el : ${fecha}`);
         cont++; 
         lastfecha = fecha;
     } 
