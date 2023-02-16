@@ -33,36 +33,33 @@ const validacionPeticion = (req, res, next) => {
   ) {
     next();
   } else {
-        return res
-          .status(400)
-          .send(
-            "Method no valido"
-          );
+    return res.status(400).send("Method no valido");
   }
-}
-
+};
 
 const validarParametros = (req, res, next) => {
   const estado = req.params.estado;
   if (estado === "completada" || estado === "incompleta") {
   } else {
-     next();
+    next();
     res.status(404).send("Bad request");
   }
 };
 
-
 const validarurl = (req, res, next) => {
   const { originalUrl } = req;
   const urls = originalUrl.split("/");
-  if (urls[1] === "agregar" || urls[1] === "editar" || urls[1] === "eliminar") {
+  if (
+    urls[1] === "agregar" ||
+    urls[1] === "/editar/:id" ||
+    urls[1] === "eliminar"
+  ) {
     res.send("la url es valida");
-    next();
   } else {
-    
+    next();
     res.status(404).send(" La url es Invalida");
   }
-}
+};
 
 module.exports = {
   error,

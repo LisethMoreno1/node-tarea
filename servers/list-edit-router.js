@@ -15,11 +15,25 @@ const {
 
 app.use(express.json());
 app.use(error);
-app.use(Validarse);
+app.use(Validarse);     
 app.use(validarurl);
 app.use(validacionPeticion);
 app.use(validarParametros);
 
+
+//TOKE
+app.post( '/login' , (req,res) => {
+   const id  = req.body.id;
+   const username = req.body.username;
+   const password = req.body.password;
+   jwt.sign(id, password, username, "secret_key", (err, token) => {
+     if (err) {
+       res.status(400).send({ msg: "Error" });
+     } else {
+       res.send({ msg: "success", token: token });
+     }
+   });
+})
 
 // Agregar
 app.post("/agregar",  function (req, res) {
